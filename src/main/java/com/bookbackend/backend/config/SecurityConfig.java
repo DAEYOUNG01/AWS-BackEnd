@@ -10,6 +10,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.util.List;
 
 /**
@@ -55,6 +59,11 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     // CORS 설정
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -74,5 +83,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
 
         return source;
+
+
     }
 }
