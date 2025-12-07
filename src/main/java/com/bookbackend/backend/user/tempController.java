@@ -14,5 +14,4 @@ public class tempController {
     public String getBook(@PathVariable Long id) {
         return "dummy";
     }
-    // 아무렇게나 수정해~
 }
