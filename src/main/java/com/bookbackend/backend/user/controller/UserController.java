@@ -12,7 +12,7 @@ public class UserController {
 
     private final UserService userService;
 
-    // :arrow_down_small: 직접 생성자 작성
+    // 🔽 직접 생성자 작성
     public UserController(UserService userService) {
         this.userService = userService;
     }

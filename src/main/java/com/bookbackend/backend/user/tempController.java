@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/book")
+//@RequestMapping("/book")
 @Tag(name = "Book API", description = "도서 관련 API")
 public class tempController {
 
