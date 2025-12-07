@@ -1,5 +1,6 @@
 package com.bookbackend.backend.book.entity;
 
+import com.bookbackend.backend.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

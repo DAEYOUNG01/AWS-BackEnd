@@ -1,7 +1,7 @@
 package com.bookbackend.backend.book.repository;
 
 import com.bookbackend.backend.book.entity.Book;
-import com.bookbackend.backend.book.entity.User;
+import com.bookbackend.backend.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

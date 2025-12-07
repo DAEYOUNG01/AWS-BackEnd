@@ -4,9 +4,9 @@ import com.bookbackend.backend.book.dto.BookCreateRequest;
 import com.bookbackend.backend.book.dto.BookResponse;
 import com.bookbackend.backend.book.dto.BookUpdateRequest;
 import com.bookbackend.backend.book.entity.Book;
-import com.bookbackend.backend.book.entity.User;
 import com.bookbackend.backend.book.repository.BookRepository;
-import com.bookbackend.backend.book.repository.UserRepository;
+import com.bookbackend.backend.user.entity.User;
+import com.bookbackend.backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
