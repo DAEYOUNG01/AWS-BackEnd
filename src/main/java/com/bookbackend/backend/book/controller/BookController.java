@@ -85,4 +85,8 @@ public class BookController {
     public List<BookResponse> getAllBooks() {
         return bookService.getAllBooks();
     }
+
+    // TODO: 작가로 책검색 추가 /books/getBookByAuthor
+
+    // TODO: 책이름으로 검색 추가 /books/getBookByTitle
 }
