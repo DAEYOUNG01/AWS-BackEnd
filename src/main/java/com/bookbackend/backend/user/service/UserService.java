@@ -19,7 +19,7 @@ public class UserService {
     // ------------------------------
     // 🔹 회원가입
     // ------------------------------
-    public SignUpResponse signup(SignUpRequest request) {
+    public JWTResponse signup(SignUpRequest request) {
 
         // 1. 빈 값 체크
         if (isBlank(request.getLoginId()) ||
@@ -49,19 +49,17 @@ public class UserService {
         String access = jwtProvider.generateAccessToken(saved.getLoginId());
         String refresh = jwtProvider.generateRefreshToken(saved.getLoginId());
 
-        JWTResponse jwt = new JWTResponse(
+        return new JWTResponse(
                 access,
                 refresh,
                 jwtProvider.getAccessTokenExpiry()
         );
-
-        return new SignUpResponse(jwt);
     }
 
     // ------------------------------
     // 🔹 로그인
     // ------------------------------
-    public LoginResponse login(LoginRequset request) {
+    public JWTResponse login(LoginRequset request) {
 
         User user = userRepository.findByLoginId(request.getLoginId())
                 .orElseThrow(() -> new IllegalArgumentException("LOGIN_FAIL"));
@@ -75,13 +73,11 @@ public class UserService {
         String access = jwtProvider.generateAccessToken(user.getLoginId());
         String refresh = jwtProvider.generateRefreshToken(user.getLoginId());
 
-        JWTResponse jwt = new JWTResponse(
+        return new JWTResponse(
                 access,
                 refresh,
                 jwtProvider.getAccessTokenExpiry()
         );
-
-        return new LoginResponse(jwt);
     }
 
     // ------------------------------
