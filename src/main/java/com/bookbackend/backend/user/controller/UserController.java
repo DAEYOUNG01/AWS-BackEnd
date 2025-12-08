@@ -77,10 +77,8 @@ public class UserController {
 
     @Operation(summary = "내 프로필 조회", description = "로그인한 사용자의 정보를 조회합니다.")
     @GetMapping("/me")
-    public ResponseEntity<ApiResponse<UserProfileResponse>> getMyProfile(
-            @RequestHeader("Authorization") String authHeader
-    ) {
-        UserProfileResponse response = userService.getMyProfile(authHeader);
+    public ResponseEntity<ApiResponse<UserProfileResponse>> getMyProfile() {
+        UserProfileResponse response = userService.getMyProfile();
 
         return ResponseEntity.ok(
                 new ApiResponse<>("200", "내 프로필 조회 성공", response)

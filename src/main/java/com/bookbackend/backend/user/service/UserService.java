@@ -7,6 +7,8 @@ import com.bookbackend.backend.user.dto.*;
 import com.bookbackend.backend.user.entity.User;
 import com.bookbackend.backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -119,15 +121,16 @@ public class UserService {
         return new ResignResponse("회원 탈퇴 완료");
     }
 
-    public UserProfileResponse getMyProfile(String authHeader) {
+    public UserProfileResponse getMyProfile() {
 
-        // "Bearer xxx" → 토큰만 추출
-        String token = authHeader.replace("Bearer ", "");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // 토큰에서 loginId 추출
-        String loginId = jwtProvider.getLoginIdFromToken(token);
+        if (authentication == null || authentication.getPrincipal() == null) {
+            throw new CustomException(ErrorCode.UNAUTHORIZED);
+        }
 
-        // DB 조회
+        String loginId = authentication.getPrincipal().toString();
+
         User user = userRepository.findByLoginId(loginId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
@@ -138,11 +141,10 @@ public class UserService {
         );
     }
 
-
     // ------------------------------
     // 🔹 내부 공용 유틸 함수
     // ------------------------------
     private boolean isBlank(String value) {
-        return value != null && !value.trim().isEmpty();
+        return value == null && !value.trim().isEmpty();
     }
 }
