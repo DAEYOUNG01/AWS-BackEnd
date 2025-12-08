@@ -48,7 +48,7 @@ public class UserService {
         );
     }
 
-    public JWTResponse login(LoginRequset request) {
+    public JWTResponse login(LoginRequest request) {
 
         User user = userRepository.findByLoginId(request.getLoginId())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -75,7 +75,7 @@ public class UserService {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         // loginId 변경
-        if (!isBlank(request.getLoginId())) {
+        if (isBlank(request.getLoginId())) {
 
             // 중복 아이디 체크 (자기 자신 제외)
             if (userRepository.existsByLoginId(request.getLoginId()) && !request.getLoginId().equals(user.getLoginId())) {
@@ -86,13 +86,13 @@ public class UserService {
         }
 
         // 비밀번호 변경
-        if (!isBlank(request.getPassword())) {
+        if (isBlank(request.getPassword())) {
             String encodedPw = passwordEncoder.encode(request.getPassword());
             user.setPassword(encodedPw);
         }
 
         // 이름 변경
-        if (!isBlank(request.getName())) {
+        if (isBlank(request.getName())) {
             user.setName(request.getName());
         }
 
@@ -119,10 +119,30 @@ public class UserService {
         return new ResignResponse("회원 탈퇴 완료");
     }
 
+    public UserProfileResponse getMyProfile(String authHeader) {
+
+        // "Bearer xxx" → 토큰만 추출
+        String token = authHeader.replace("Bearer ", "");
+
+        // 토큰에서 loginId 추출
+        String loginId = jwtProvider.getLoginIdFromToken(token);
+
+        // DB 조회
+        User user = userRepository.findByLoginId(loginId)
+                .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
+
+        return new UserProfileResponse(
+                user.getUserId(),
+                user.getLoginId(),
+                user.getName()
+        );
+    }
+
+
     // ------------------------------
     // 🔹 내부 공용 유틸 함수
     // ------------------------------
     private boolean isBlank(String value) {
-        return value == null || value.trim().isEmpty();
+        return value != null && !value.trim().isEmpty();
     }
 }

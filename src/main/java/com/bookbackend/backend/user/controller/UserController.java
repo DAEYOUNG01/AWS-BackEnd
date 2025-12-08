@@ -21,7 +21,7 @@ public class UserController {
     @Operation(summary = "로그인", description = "loginId와 password를 받아 JWT AccessToken / RefreshToken을 발급합니다.")
     @PostMapping("/login")
     public ResponseEntity<ApiResponse<JWTResponse>> login(
-            @Valid @RequestBody LoginRequset request
+            @Valid @RequestBody LoginRequest request
     ) {
         JWTResponse response = userService.login(request);
 
@@ -74,4 +74,17 @@ public class UserController {
                 new ApiResponse<>("200", "회원 정보 수정 성공", response)
         );
     }
+
+    @Operation(summary = "내 프로필 조회", description = "로그인한 사용자의 정보를 조회합니다.")
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<UserProfileResponse>> getMyProfile(
+            @RequestHeader("Authorization") String authHeader
+    ) {
+        UserProfileResponse response = userService.getMyProfile(authHeader);
+
+        return ResponseEntity.ok(
+                new ApiResponse<>("200", "내 프로필 조회 성공", response)
+        );
+    }
+
 }

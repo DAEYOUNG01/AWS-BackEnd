@@ -1,7 +1,6 @@
 package com.bookbackend.backend.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import lombok.AllArgsConstructor;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequset {
+public class LoginRequest {
     @NotBlank(message = "ID를 입력해주세요")
     private String loginId;
 
