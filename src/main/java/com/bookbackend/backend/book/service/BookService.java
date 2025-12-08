@@ -10,21 +10,21 @@ import com.bookbackend.backend.global.exception.CustomException;
 import com.bookbackend.backend.global.exception.ErrorCode;
 import com.bookbackend.backend.user.entity.User;
 import com.bookbackend.backend.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class BookService {
 
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
 
     // 책 등록
+    @Transactional
     public BookDetailResponse createBook(Long userId, BookCreateRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -42,6 +42,7 @@ public class BookService {
     }
 
     // 사용자별 책 목록 조회
+    @Transactional(readOnly = true)
     public List<BookListResponse> getBooksByUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
@@ -54,6 +55,7 @@ public class BookService {
     }
 
     // 책 상세 조회
+    @Transactional(readOnly = true)
     public BookDetailResponse getBook(Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new CustomException(ErrorCode.BOOK_NOT_FOUND));
@@ -62,6 +64,7 @@ public class BookService {
     }
 
     // 책 수정
+    @Transactional
     public BookDetailResponse updateBook(Long bookId, BookUpdateRequest request) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new CustomException(ErrorCode.BOOK_NOT_FOUND));
@@ -76,6 +79,7 @@ public class BookService {
     }
 
     // 책 삭제
+    @Transactional
     public void deleteBook(Long bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new CustomException(ErrorCode.BOOK_NOT_FOUND));
@@ -83,6 +87,7 @@ public class BookService {
         bookRepository.delete(book);
     }
     // 책 검색
+    @Transactional(readOnly = true)
     public List<BookListResponse> searchBooksByTitle(String title) {
 
         if (title == null || title.trim().isEmpty()){
