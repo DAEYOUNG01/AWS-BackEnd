@@ -80,5 +80,12 @@ public class BookService {
 
         bookRepository.delete(book);
     }
+    // 책 검색
+    public List<BookListResponse> searchBooksByTitle(String title) {
+        List<Book> books = bookRepository.findByTitleContaining(title);
 
+        return books.stream()
+                .map(BookListResponse::of)
+                .toList();
+    }
 }

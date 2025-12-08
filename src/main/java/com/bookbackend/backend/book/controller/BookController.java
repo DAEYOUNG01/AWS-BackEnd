@@ -70,5 +70,10 @@ public class BookController {
     ) {
         bookService.deleteBook(bookId);
     }
-
+    //책 검색
+    @Operation(summary = "책 검색", description = "책 title로 책 검색")
+    @GetMapping("/search")
+    public List<BookListResponse> searchBooks(@RequestParam String title){
+        return bookService.searchBooksByTitle(title);
+    }
 }
