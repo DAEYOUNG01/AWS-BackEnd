@@ -7,6 +7,7 @@ import com.bookbackend.backend.book.dto.BookUpdateRequest;
 import com.bookbackend.backend.book.service.BookService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class BookController {
     public BookDetailResponse createBook(
             @Parameter(description = "책을 등록하는 사용자 ID", example = "1")
             @RequestParam Long userId,
-            @RequestBody BookCreateRequest request
+            @Valid @RequestBody BookCreateRequest request
     ) {
         return bookService.createBook(userId, request);
     }
@@ -56,7 +57,7 @@ public class BookController {
     public BookDetailResponse updateBook(
             @Parameter(description = "수정할 책 ID", example = "10")
             @PathVariable Long bookId,
-            @RequestBody BookUpdateRequest request
+            @Valid @RequestBody BookUpdateRequest request
     ) {
         return bookService.updateBook(bookId, request);
     }
