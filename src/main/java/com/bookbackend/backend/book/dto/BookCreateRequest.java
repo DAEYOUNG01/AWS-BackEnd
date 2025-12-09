@@ -19,4 +19,6 @@ public class BookCreateRequest {
     @NotBlank(message = "저자를 입력해주세요")
     @Size(max = 20, message = "20자 이상 초과할 수 없습니다.")
     private String author;
+    @NotBlank(message = "url이 존재하지 않습니다.")
+    private String imageUrl;
 }

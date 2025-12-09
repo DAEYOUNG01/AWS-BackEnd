@@ -31,6 +31,7 @@ public class BookService {
                 .content(request.getContent())
                 .genre(request.getGenre())
                 .author(request.getAuthor())
+                .imageUrl(request.getImageUrl())
                 .user(user)
                 .build();
 
@@ -70,6 +71,7 @@ public class BookService {
         book.setGenre(request.getGenre());
         book.setContent(request.getContent());
         book.setAuthor(request.getAuthor());
+        book.setImageUrl(request.getImageUrl());
 
         Book updated = bookRepository.save(book);
         return BookDetailResponse.of(updated);

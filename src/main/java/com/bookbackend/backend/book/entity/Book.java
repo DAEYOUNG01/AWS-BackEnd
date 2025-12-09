@@ -32,7 +32,7 @@ public class Book {
 
     @Column(length = 20)
     private String author;
-
+    @Column(name = "image_url", length = 1000)
     private String imageUrl;
 
     private LocalDateTime createdAt;
